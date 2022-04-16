@@ -1,8 +1,6 @@
-package main
+package lwe
 
 import (
-  "fmt"
-  "math/rand"
 )
 
 // Always hold the invariants
@@ -116,28 +114,4 @@ func (lwe LWE) Mul(C0 Cipher, C1 Cipher) Cipher {
     }
   }
   return C
-}
-
-func main() {
-  lwe := LWE{
-    N: 8,
-    Q: 64,
-    B: 1,
-  }
-  trials := 100
-  correct := 0
-  for i := 0; i < trials; i++ {
-    s := lwe.Gen()
-    r := rand.Intn(4)
-    x0 := (r&1) == 1
-    x1 := (r&2) == 2
-    C0 := lwe.Enc(s,x0)
-    C1 := lwe.Enc(s,x1)
-    C2 := lwe.Enc(s,x1)
-    if lwe.Dec(s,lwe.Mul(lwe.Add(C0,C1),C2)) == ((lwe.Dec(s,C0) != lwe.Dec(s,C1)) && lwe.Dec(s,C2)) {
-      correct += 1
-    }
-  }
-  fmt.Printf("N: %d, Q: %d, B: %d\n", lwe.N, lwe.Q, lwe.B)
-  fmt.Printf("%d/%d\n",correct,trials)
 }

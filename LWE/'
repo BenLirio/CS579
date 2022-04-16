@@ -1,0 +1,17 @@
+package main
+
+import (
+  "./lwe"
+  "fmt"
+)
+
+func Alice(ctxt lwe.LWE) {
+  s := ctxt.Gen()
+  idx := ctxt.Enc(s, true)
+}
+
+func main() {
+  ctxt := leveled.LWE{N: 16, Q: 32, B: 1}
+  Alice(lwe)
+  fmt.Println()
+}

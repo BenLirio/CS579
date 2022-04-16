@@ -1,4 +1,4 @@
-package main
+package lwe
 
 import (
   "math/rand"
