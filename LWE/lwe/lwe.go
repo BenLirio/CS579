@@ -12,10 +12,13 @@ type LWE struct {
   B int
 }
 
+
 type Cipher struct {
   A [][]int
   B []int
 }
+
+type OP func(Cipher,Cipher) Cipher
 
 func log2(a int) int {
   if a == 0 { return 0 }
