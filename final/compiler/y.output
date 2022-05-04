@@ -1,0 +1,129 @@
+
+state 0
+	$accept: .top $end 
+
+	LPAREN  shift 7
+	ZERO  shift 5
+	ONE  shift 6
+	.  error
+
+	expr  goto 2
+	expr1  goto 3
+	expr2  goto 4
+	top  goto 1
+
+state 1
+	$accept:  top.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	top:  expr.    (1)
+	expr:  expr.PLUS expr1 
+
+	PLUS  shift 8
+	.  reduce 1 (src line 27)
+
+
+state 3
+	expr:  expr1.    (2)
+	expr1:  expr1.STAR expr2 
+
+	STAR  shift 9
+	.  reduce 2 (src line 30)
+
+
+state 4
+	expr1:  expr2.    (4)
+
+	.  reduce 4 (src line 33)
+
+
+state 5
+	expr2:  ZERO.    (6)
+
+	.  reduce 6 (src line 36)
+
+
+state 6
+	expr2:  ONE.    (7)
+
+	.  reduce 7 (src line 37)
+
+
+state 7
+	expr2:  LPAREN.expr RPAREN 
+
+	LPAREN  shift 7
+	ZERO  shift 5
+	ONE  shift 6
+	.  error
+
+	expr  goto 10
+	expr1  goto 3
+	expr2  goto 4
+
+state 8
+	expr:  expr PLUS.expr1 
+
+	LPAREN  shift 7
+	ZERO  shift 5
+	ONE  shift 6
+	.  error
+
+	expr1  goto 11
+	expr2  goto 4
+
+state 9
+	expr1:  expr1 STAR.expr2 
+
+	LPAREN  shift 7
+	ZERO  shift 5
+	ONE  shift 6
+	.  error
+
+	expr2  goto 12
+
+state 10
+	expr:  expr.PLUS expr1 
+	expr2:  LPAREN expr.RPAREN 
+
+	PLUS  shift 8
+	RPAREN  shift 13
+	.  error
+
+
+state 11
+	expr:  expr PLUS expr1.    (3)
+	expr1:  expr1.STAR expr2 
+
+	STAR  shift 9
+	.  reduce 3 (src line 31)
+
+
+state 12
+	expr1:  expr1 STAR expr2.    (5)
+
+	.  reduce 5 (src line 34)
+
+
+state 13
+	expr2:  LPAREN expr RPAREN.    (8)
+
+	.  reduce 8 (src line 38)
+
+
+11 terminals, 5 nonterminals
+9 grammar rules, 14/16000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+54 working sets used
+memory: parser 9/240000
+11 extra closures
+17 shift entries, 1 exceptions
+7 goto entries
+3 entries saved by goto default
+Optimizer space used: output 17/240000
+17 table entries, 3 zero
+maximum spread: 11, maximum offset: 9
