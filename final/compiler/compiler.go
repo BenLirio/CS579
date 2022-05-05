@@ -15,26 +15,10 @@
 package compiler
 
 import (
-	"bufio"
-	"io"
-	"log"
-	"os"
 )
 
 var expOut *Exp
-func ParseString() *Exp {
-	in := bufio.NewReader(os.Stdin)
-  if _, err := os.Stdout.WriteString("> "); err != nil {
-    log.Fatalf("WriteString: %s", err)
-  }
-  line, err := in.ReadBytes('\n')
-  if err == io.EOF {
-    return expOut
-  }
-  if err != nil {
-    log.Fatalf("ReadBytes: %s", err)
-  }
-
-  exprParse(&exprLex{line: line})
+func ParseString(s string) *Exp {
+  exprParse(&exprLex{line: []byte(s)})
   return expOut
 }

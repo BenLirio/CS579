@@ -1,0 +1,16 @@
+Message Authentication Code (MAC)
+A MAC is a cryptographic checksum used to verify the integrity of a message.
+A checksum is a numerical value that is computed from a data string and used to verify the accuracy of that string.
+
+
+
+Integrity - message
+Authenticity - sender
+
+(Gen, Mac, Vrfy)
+
+k <- Gen n
+where |k| ge n
+
+t <- Mac k m
+

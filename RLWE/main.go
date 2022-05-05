@@ -4,14 +4,16 @@ import (
   "fmt"
 )
 
-var q int = 5
 
-func max(a int, b int) int {
-  if a > b {
-    return a
+
+func normalize(a []int) []int {
+  c := make([]int, len(a))
+  for i := 0; i < len(c); i++ {
+    c[i] = (a[i]+q)%q
   }
-  return b
+  return c
 }
+
 
 func mul(a []int, b []int) []int {
   c := make([]int,len(a) + len(b)-1)
@@ -20,7 +22,7 @@ func mul(a []int, b []int) []int {
       c[i+j] = (c[i+j] + a[i]*b[j])%q
     }
   }
-  return c
+  return normalize(c)
 }
 
 func add(a []int, b []int) []int {
@@ -34,24 +36,23 @@ func add(a []int, b []int) []int {
       c[i] = (c[i] + b[i])%q
     }
   }
-  return c
+  return normalize(c)
 }
 
-func normalize(a []int) []int {
-  c := make([]int, len(a))
-  for i := 0; i < len(c); i++ {
-    c[i] = (a[i]+q)%q
-  }
-  return c
+func testPoly() {
+  f := Poly{1,0,0,0,1}
+  a := Poly{7,6,5,4,3,2,1}
+  fmt.Println(a.modPoly(f))
 }
 
 func main() {
+  /*
   s := []int{1,1,1,1}
   sk := make([]int, len(s))
   copy(sk,s)
   a := []int{1,1,1,1}
   e := []int{1,1,1,1}
-  pk0 := normalize(mul([]int{-1},add(mul(a,s), e)))
+  pk0 := mul([]int{-1},add(mul(a,s), e))
   pk1 := make([]int,len(a))
   copy(pk1,a)
 
@@ -63,8 +64,10 @@ func main() {
 
   t := 2
   delta := q/t
-  ct0 := normalize(add(add(mul(pk0,u),e1), mul([]int{delta},m)))
-  ct1 := normalize(add(mul(pk1,u),e2))
-
+  ct0 := add(add(mul(pk0,u),e1), mul([]int{delta},m))
+  ct1 := add(mul(pk1,u),e2)
   fmt.Println(sk,ct0,ct1)
+  */
+
+  testPoly()
 }
